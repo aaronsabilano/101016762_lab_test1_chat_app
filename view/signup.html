@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Signup</title>
+</head>
+<body>
+  <h2>Signup</h2>
+
+<!-- 
+REQUIREMENT FULFILLED: 
+- [R2] Working Signup Page 
+- This form collects user info and sends it to the Express API (/signup)
+- The API stores the user in MongoDB using the User model 
+-->
+  <form id="signupForm">
+    <div>
+      <label>Username</label>
+      <input name="username" required />
+    </div>
+
+    <div>
+      <label>First name</label>
+      <input name="firstname" required />
+    </div>
+
+    <div>
+      <label>Last name</label>
+      <input name="lastname" required />
+    </div>
+
+    <div>
+      <label>Password</label>
+      <input name="password" type="password" required />
+    </div>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <p><a href="/login.html">Go to login</a></p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("signupForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // [R2] Gather the form fields
+        const username = form.username.value;
+        const firstname = form.firstname.value;
+        const lastname = form.lastname.value;
+        const password = form.password.value;
+
+        // [R2] Call the Express API endpoint that creates the user in MongoDB
+        const response = await fetch("/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, firstname, lastname, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.status === 201) {
+          alert("Signup successful!");
+          // After creating the account, send them to login
+          window.location.href = "/login.html";
+        } else {
+          alert(data.error || "Signup failed");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

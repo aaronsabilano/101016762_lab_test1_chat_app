@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .section { border: 1px solid #eee; padding: 10px; margin: 12px 0; }
+    .row { margin: 8px 0; }
+    input { padding: 6px; }
+    button { padding: 6px 10px; cursor: pointer; }
+    #messages, #privateMessages {
+      border: 1px solid #ccc;
+      height: 260px;
+      overflow-y: auto;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .msg { margin: 6px 0; }
+    .meta { font-size: 12px; color: #666; }
+    #statusBar { font-size: 12px; color: #333; margin-top: 6px; }
+    #typingIndicator { font-size: 12px; color: #666; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <h2>Chat App</h2>
+
+  <div class="row">
+    <strong>Logged in as:</strong> <span id="currentUser"></span>
+  </div>
+
+  <!-- [R5] Room Join/Leave UI -->
+  <!-- [R7] Room chat UI (messages + send) -->
+  <div class="section">
+    <h3>Group Chat</h3>
+
+    <div class="row">
+      <label>Room:</label>
+      <input id="roomInput" value="general" />
+      <button id="joinBtn" type="button">Join Room</button>
+      <button id="leaveBtn" type="button">Leave Room</button>
+    </div>
+
+    <div id="statusBar">
+      Current room: <strong><span id="currentRoomLabel">None</span></strong>
+    </div>
+
+    <div id="messages"></div>
+
+    <form id="chatForm">
+      <input id="messageInput" placeholder="Type a message..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <!-- [R6] Typing Indicator for 1-to-1 chat -->
+  <div class="section">
+    <h3>Private (1-to-1) Chat</h3>
+
+    <div class="row">
+      <label>Send to username:</label>
+      <input id="toUserInput" placeholder="e.g. anotherUser" />
+      <button id="openDmBtn" type="button">Open DM</button>
+    </div>
+
+    <div id="typingIndicator"></div>
+
+    <div id="privateMessages"></div>
+
+    <form id="privateForm">
+      <input id="privateInput" placeholder="Type a private message..." required />
+      <button type="submit">Send DM</button>
+    </form>
+  </div>
+
+  <!-- [R3] Logout button clears localStorage "session" -->
+  <button id="logoutBtn" type="button">Logout</button>
+
+  <!-- Socket.io client -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!--  client logic -->
+  <script src="/js/chat.js"></script>
+</body>
+</html>
